@@ -1,8 +1,12 @@
 #!/bin/sh
 
-if [ -e $LXC_ROOTFS_PATH/init ]; then
-    exit 1
-fi
+#if [ -e $LXC_ROOTFS_PATH/dev/.android_boot_done ]; then
+#    exit 1
+#fi
+
+mount -n -o bind,recurse /android $LXC_ROOTFS_PATH
+
+mkdir -p $LXC_ROOTFS_PATH/proc
 
 # Create /dev/pts if missing
 mkdir -p $LXC_ROOTFS_PATH/dev/pts
@@ -16,5 +20,4 @@ run-parts /var/lib/lxc/android/pre-start.d || true
 
 sed -i "/on nonencrypted/d" $LXC_ROOTFS_PATH/init.rc
 
-mount -n -o bind,recurse /android $LXC_ROOTFS_PATH
 
