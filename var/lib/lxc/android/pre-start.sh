@@ -1,7 +1,6 @@
 #!/bin/sh
 
-# Check if android init exist or not
-if [ ! -e /android/init ]; then
+if [ -e $LXC_ROOTFS_PATH/init ]; then
     exit 1
 fi
 
@@ -15,5 +14,7 @@ mount -n -o bind,rw /dev/socket $LXC_ROOTFS_PATH/dev/socket
 # run config snippet scripts
 run-parts /var/lib/lxc/android/pre-start.d || true
 
-#sed -i "/on nonencrypted/d" $LXC_ROOTFS_PATH/init.rc
+sed -i "/on nonencrypted/d" $LXC_ROOTFS_PATH/init.rc
+
+mount -n -o bind,recurse /android $LXC_ROOTFS_PATH
 
