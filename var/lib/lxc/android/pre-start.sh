@@ -1,10 +1,14 @@
 #!/bin/sh
 
-#if [ -e $LXC_ROOTFS_PATH/dev/.android_boot_done ]; then
-#    exit 1
-#fi
+if [ -e $LXC_ROOTFS_PATH/dev/.android_boot_done ]; then
+    exit 1
+fi
+
+mkdir $LXC_ROOTFS_PATH
 
 mount -n -o bind,recurse /android $LXC_ROOTFS_PATH
+
+rm -rf $LXC_ROOTFS_PATH/dev && mkdir -p $LXC_ROOTFS_PATH/dev
 
 mkdir -p $LXC_ROOTFS_PATH/proc
 
@@ -19,5 +23,3 @@ mount -n -o bind,rw /dev/socket $LXC_ROOTFS_PATH/dev/socket
 run-parts /var/lib/lxc/android/pre-start.d || true
 
 sed -i "/on nonencrypted/d" $LXC_ROOTFS_PATH/init.rc
-
-
