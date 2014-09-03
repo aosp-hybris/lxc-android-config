@@ -1,0 +1,7 @@
+#!/bin/sh
+
+if [ -f "/home/phablet/.display-mir" ]; then
+    sed -i $LXC_ROOTFS_PATH/init.rc \
+        -e 's|\(/system/bin/surfaceflinger\)|\1.disabled|' \
+        -e  's|\(/system/bin/ubuntuappmanager\)|\1.disabled|'
+fi

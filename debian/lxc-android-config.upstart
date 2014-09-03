@@ -1,0 +1,32 @@
+# lxc-android-config - LXC Android Config and Container Initialization
+#
+# Configure and initialize the Android container for Ubuntu Touch
+
+description	"lxc android config and container initialization"
+
+start on started cgroup-lite
+stop on runlevel [06]
+
+emits android
+
+console none
+
+exec lxc-start -n android -- /init
+
+post-start script
+    if [ ! -d /dev/cpuctl ] && [ -d /sys/fs/cgroup/cpu ]; then
+        mkdir /dev/cpuctl
+        mount --bind /sys/fs/cgroup/cpu /dev/cpuctl
+    fi
+
+    lxc-wait -n android -s RUNNING
+    containerpid="$(lxc-info -n android|grep pid|sed 's/^pid:.*[[:space:]]//')"
+    while true; do
+        [ -f /proc/$containerpid/root/dev/.coldboot_done ] && break
+        sleep 1
+    done
+
+    initctl emit android
+end script
+
+pre-stop exec lxc-stop -n android -k

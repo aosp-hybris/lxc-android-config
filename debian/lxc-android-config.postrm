@@ -1,0 +1,11 @@
+#!/bin/sh
+
+case $1 in
+    remove|purge)
+        dpkg-divert --package lxc-android-config --remove --rename --divert \
+            /usr/share/polkit-1/actions/org.freedesktop.NetworkManager.policy.orig \
+            /usr/share/polkit-1/actions/org.freedesktop.NetworkManager.policy
+        ;;
+esac
+
+#DEBHELPER#

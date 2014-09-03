@@ -1,0 +1,877 @@
+lxc-android-config (0.117) trusty; urgency=low
+
+  * Use Mir on the goldfish emulator as well; we definitely don't care about
+    SurfaceFlinger on goldfish.
+
+ -- Steve Langasek <steve.langasek@ubuntu.com>  Tue, 22 Oct 2013 13:48:59 -0700
+
+lxc-android-config (0.116) trusty; urgency=low
+
+  * drop android-chroot, it doesnt provide what people think it does and is
+    broken anyway
+  * make parsing the lxc-info output work with new lxc so our session can
+    start again
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Tue, 22 Oct 2013 14:54:22 +0200
+
+lxc-android-config (0.115) trusty; urgency=low
+
+  * Drop etc/init/boot-hooks/setcap-unity8.conf; it's not needed any more.
+
+ -- Michał Sawicz <michal.sawicz@canonical.com> Tue, 22 Oct 2013 13:26:28 +0200
+
+lxc-android-config (0.114) saucy; urgency=low
+
+  * Add etc/init/boot-hooks/setcap-unity8.conf; this is a copy of a script
+    which unity8 used to ship as unity8-setcap.conf, but that was causing boot
+    issues on desktops with unity8 installed due to boot-hooks being missing
+    there.
+  * etc/init/boot-hooks/setcap-unity8.conf: skip if /usr/bin/unity8 doesn't
+    exist.
+
+ -- Loïc Minier <loic.minier@ubuntu.com>  Thu, 17 Oct 2013 00:14:31 +0200
+
+lxc-android-config (0.113) saucy; urgency=low
+
+  * Disabling the appmanager from android when running mir. 
+
+ -- Sergio Schvezov <sergio.schvezov@canonical.com>  Fri, 11 Oct 2013 11:51:20 -0300
+
+lxc-android-config (0.112) saucy; urgency=low
+
+  * Fix getprop to check ro.product.device in set-display-mir boot-hook; also
+    bump flag file to v2 to reset on existing devices and add grouper to the
+    list of supported devices.
+
+ -- Loïc Minier <loic.minier@ubuntu.com>  Wed, 09 Oct 2013 10:25:36 +0200
+
+lxc-android-config (0.111) saucy; urgency=low
+
+  * 70-grouper.rules: changing group for the graphics related devices so we
+    can run Mir as phablet
+
+ -- Ricardo Salveti de Araujo <ricardo.salveti@canonical.com>  Wed, 09 Oct 2013 00:57:05 -0300
+
+lxc-android-config (0.110) saucy; urgency=low
+
+  * Add set-display-mir boot-hook to create .display-mir file on boot (on
+    supported devices), unless the hook already ran; switches the default to
+    Mir for users of SF on system-upgrades; this should only run once on
+    upgrades, but the current boot-hooks don't allow this with a dep on other
+    jobs.
+
+ -- Loïc Minier <loic.minier@ubuntu.com>  Tue, 08 Oct 2013 23:16:18 +0200
+
+lxc-android-config (0.109) saucy; urgency=low
+
+  * rework teh former change slightly so prerequisites for the job are
+    handled in pre-start and teh process is actually executed directly
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Fri, 04 Oct 2013 16:56:28 +0200
+
+lxc-android-config (0.108) saucy; urgency=low
+
+  * drop "daemon" handling from upstart-local-bridge job to fix shutdown and
+    reboot
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Fri, 04 Oct 2013 16:37:23 +0200
+
+lxc-android-config (0.107) saucy; urgency=low
+
+  * make /var/lib/ureadahead writable (LP: #1233281)
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Fri, 04 Oct 2013 11:58:51 +0200
+
+lxc-android-config (0.106) saucy; urgency=low
+
+  * Creating /dev/socket in upstart-local-bridge.
+  * upstart-local-bridge job to start before lxc-android-config.
+  * removing the deletion of /dev/socket in the lxc pre start script.
+
+ -- Sergio Schvezov <sergio.schvezov@canonical.com>  Wed, 02 Oct 2013 18:27:15 -0300
+
+lxc-android-config (0.105) saucy; urgency=low
+
+  [ Stéphane Graber ]
+  * Add basic boot-hooks infrastructure (LP: #1215092)
+
+ -- Loïc Minier <loic.minier@ubuntu.com>  Thu, 03 Oct 2013 14:44:09 +0200
+
+lxc-android-config (0.104) saucy; urgency=low
+
+  * Make /etc/writable "synced" and drop the entries that got moved in there.
+    (LP: #1227520)
+
+ -- Stéphane Graber <stgraber@ubuntu.com>  Mon, 30 Sep 2013 13:31:37 +0200
+
+lxc-android-config (0.103) saucy; urgency=low
+
+    * Fix some issues with the upstart job so that it gets into the right
+    state at boot time and properly shuts down.
+
+ -- Stéphane Graber <stgraber@ubuntu.com>  Wed, 25 Sep 2013 15:42:51 -0400
+
+lxc-android-config (0.102) saucy; urgency=low
+
+  [ Sebastien Bacher ]
+  * Define /var/lib/upower as writable, it's needed for charge records
+    (lp: #1230356)
+
+  [ oliver Grawert ]
+  * make /dev/rfkill accessible for members of teh android_input group to fix
+    the bluettoth indicator and settings app
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Wed, 25 Sep 2013 17:50:56 +0200
+
+lxc-android-config (0.101) saucy; urgency=low
+
+  * merge lp:~cwayne18/ubuntu/saucy/lxc-android-config/timezone which makes
+    three additional files writable to enable timezone selection
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Mon, 23 Sep 2013 20:23:30 +0200
+
+lxc-android-config (0.100) saucy; urgency=low
+
+  * add /etc/apparmor.d/cache as writable path so we don't have to regenerate
+    system policy on every boot (LP: #1227604)
+
+ -- Jamie Strandboge <jamie@ubuntu.com>  Fri, 20 Sep 2013 12:18:06 -0500
+
+lxc-android-config (0.99) saucy; urgency=low
+
+  * upstart-local-bridge was starting too early, waiting for the filesystem
+    event instead of just on startup.
+
+ -- Sergio Schvezov <sergio.schvezov@canonical.com>  Wed, 18 Sep 2013 10:50:45 -0300
+
+lxc-android-config (0.98) saucy; urgency=low
+
+  * rervert to the old way of disabling adbd inside the android container by
+    removing the binary.
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Tue, 17 Sep 2013 21:05:16 +0200
+
+lxc-android-config (0.97) saucy; urgency=low
+
+  * usr/lib/lxc-android-config/*.rules: replacing drmrpc group ids with video,
+    as that's what we use in Ubuntu
+  * 70-grouper.rules: make sure the media related devices are all under the
+    video group
+
+ -- Ricardo Salveti de Araujo <ricardo.salveti@canonical.com>  Mon, 16 Sep 2013 20:08:16 -0300
+
+lxc-android-config (0.96) saucy; urgency=low
+
+  * 70-maguro.rules: rpmsg related devices should be under group video instead
+
+ -- Ricardo Salveti de Araujo <ricardo.salveti@canonical.com>  Mon, 16 Sep 2013 19:58:59 -0300
+
+lxc-android-config (0.95) saucy; urgency=low
+
+  * make /etc/init/ssh.override a rw file so something like:
+    echo "" | sudo tee /etc/init/ssh.override can be used to enable the ssh
+    service permanently if needed.
+    echo "manual" | sudo tee /etc/init/ssh.override can be used to disable it
+    again
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Fri, 13 Sep 2013 17:38:49 +0200
+
+lxc-android-config (0.94) saucy; urgency=low
+
+  * Adding mir override option.
+
+ -- Sergio Schvezov <sergio.schvezov@canonical.com>  Wed, 11 Sep 2013 14:31:11 -0400
+
+lxc-android-config (0.93) saucy; urgency=low
+
+  * generate ssh keys on boot if they do not exist
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Wed, 11 Sep 2013 18:43:15 +0200
+
+lxc-android-config (0.92) saucy; urgency=low
+
+  * actually make the sshd override file an override file
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Tue, 10 Sep 2013 22:43:36 +0200
+
+lxc-android-config (0.91) saucy; urgency=low
+
+  * make /etc/ssh a writable path so we can generate keys there
+  * add sshd.override upstart job (currently just disabling the ssh autostart)
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Tue, 10 Sep 2013 20:26:13 +0200
+
+lxc-android-config (0.90) saucy; urgency=low
+
+  * lib/udev/rules.d/65-android.rules: add a rule for the /dev/mtp_usb device,
+    so that it's accessible by group plugdev with the right permissions.
+
+ -- Mathieu Trudel-Lapierre <mathieu-tl@ubuntu.com>  Tue, 10 Sep 2013 09:38:56 -0400
+
+lxc-android-config (0.89) saucy; urgency=low
+
+  * Add /var/lib/usermetrics to writable paths.
+
+ -- Stéphane Graber <stgraber@ubuntu.com>  Fri, 06 Sep 2013 12:50:27 -0400
+
+lxc-android-config (0.88) saucy; urgency=low
+
+  * Add /var/lib/ofono and /var/lib/AccountsService/users to the list of
+    persistent directories.
+
+ -- Stéphane Graber <stgraber@ubuntu.com>  Fri, 06 Sep 2013 11:59:13 -0400
+
+lxc-android-config (0.87) saucy; urgency=low
+
+  * Add /var/lib/logrorate to persistent directories.
+
+ -- Stéphane Graber <stgraber@ubuntu.com>  Tue, 03 Sep 2013 15:09:18 -0400
+
+lxc-android-config (0.86) saucy; urgency=low
+
+  * Removing 11-no-media-service as the media service was changed in the
+    android side to only provide the camera service. For it to work properly,
+    the user also needs to update the Android image (can't use package
+    dependencies at this point as the android package is not yet used)
+
+ -- Ricardo Salveti de Araujo <ricardo.salveti@canonical.com>  Wed, 28 Aug 2013 16:41:00 -0300
+
+lxc-android-config (0.85) saucy; urgency=low
+
+  [ Loïc Minier ]
+  * Add a 5th column to writable-path for mount flags; use "defaults" for
+    temporary mounts and "none" for persistent mounts (bind option will be
+    prepended). (LP: #1217866)
+
+  [ Stéphane Graber ]
+  * Change /var/lib/sudo from persistent to temporary (mode=0700)
+
+ -- Stéphane Graber <stgraber@ubuntu.com>  Wed, 28 Aug 2013 10:07:07 -0400
+
+lxc-android-config (0.84) saucy; urgency=low
+
+  * Mark /var/lib/sudo as persistent rather than temporary, so that it gets
+    proper permissions.
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Wed, 28 Aug 2013 14:27:16 +0200
+
+lxc-android-config (0.83) saucy; urgency=low
+
+  * Mark /var/lib/sudo as writable and temporary.
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Wed, 28 Aug 2013 14:12:35 +0200
+
+lxc-android-config (0.82) saucy; urgency=low
+
+  * Mark /var/lib/PackageKit as writable and persistent; LP: #1217462.
+
+ -- Loïc Minier <loic.minier@ubuntu.com>  Tue, 27 Aug 2013 19:33:38 +0200
+
+lxc-android-config (0.81) saucy; urgency=low
+
+  * drop teh versioning of teh upstart dep so teh package gets actually
+    published and people have a chance to get their sound back again (which
+    now is completely broken on the released image) 
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Tue, 27 Aug 2013 16:55:57 +0200
+
+lxc-android-config (0.80) saucy; urgency=low
+
+  * add /var/lib/lxc/android/pre-start.d/11-no-media-service which disables
+    the media service and audioflinger in the andrpoid container, we use
+    pulseaudio everywhere now
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Tue, 27 Aug 2013 12:47:19 +0200
+
+lxc-android-config (0.79) saucy; urgency=low
+
+  * move the "emits android" to the right job
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Tue, 27 Aug 2013 12:38:24 +0200
+
+lxc-android-config (0.78) saucy; urgency=low
+
+  * add upstart-local-bridge, the ubuntu side of the events bridge to the
+    container.
+
+ -- Dmitrijs Ledkovs <dmitrij.ledkov@ubuntu.com>  Tue, 27 Aug 2013 11:08:14 +0100
+
+lxc-android-config (0.77) saucy; urgency=low
+
+  * make sure the container is really up before starting to check for
+    /dev/.coldboot_done, add a sleep to the waiting loop to keep the CPU calm
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Sun, 25 Aug 2013 13:55:33 +0200
+
+lxc-android-config (0.76) saucy; urgency=low
+
+  * Adding generic rule to read/write to /dev/ashmem.
+
+ -- Sergio Schvezov <sergio.schvezov@canonical.com>  Fri, 23 Aug 2013 16:57:38 -0300
+
+lxc-android-config (0.75) saucy; urgency=low
+
+  * add better race handling to upstart job (look for ueventd stamp that marks
+   the end of the coldboot processing)
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Fri, 23 Aug 2013 16:53:14 +0200
+
+lxc-android-config (0.74) saucy; urgency=low
+
+  [Matthew Fisher]
+  * Add /custom/etc/dconf to writable-paths
+
+ -- Stéphane Graber <stgraber@ubuntu.com>  Wed, 21 Aug 2013 17:30:24 -0400
+
+lxc-android-config (0.73) saucy; urgency=low
+
+  [ Jamie Strandboge ]
+  * add various ufw paths as writable paths so ufw works
+  * add /var/cache/apparmor and /var/lib/apparmor as writable paths so
+    application confinement works
+
+  [ Stéphane Graber ]
+  * Switch from /opt to /opt/click.ubuntu.com
+
+ -- Stéphane Graber <stgraber@ubuntu.com>  Wed, 21 Aug 2013 15:27:25 -0400
+
+lxc-android-config (0.72) saucy; urgency=low
+
+  [András Mamenyák]
+  * add pollux and n8000 udev rules
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Fri, 16 Aug 2013 15:45:55 +0200
+
+lxc-android-config (0.71) saucy; urgency=low
+
+  [Matthew Fisher]
+  * Add /opt as a writable path so that click-packages work
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Fri, 16 Aug 2013 14:24:10 +0200
+
+lxc-android-config (0.70) saucy; urgency=low
+
+  * drop the pulseaudio hack, instead we make the system use the right
+  GID for the bluetooth group at Touch image build time.
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Fri, 16 Aug 2013 13:29:32 +0200
+
+lxc-android-config (0.69) saucy; urgency=low
+
+  * make the qmux_bluetooth socket dir usable if it exists
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Thu, 15 Aug 2013 15:30:15 +0200
+
+lxc-android-config (0.68) saucy; urgency=low
+
+  * ofono: start with a pre-defined set of plugins;
+    This is a result of the rilmodem code finally
+    landing in the archive version of ofono.
+
+ -- Tony Espy <espy@canonical.com>  Wed, 07 Aug 2013 20:25:14 -0400
+
+lxc-android-config (0.67) saucy; urgency=low
+
+  * allow devices that use EFS as label for the factory partition to mount it
+    under /efs instead of /factory
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Sun, 04 Aug 2013 12:24:23 +0200
+
+lxc-android-config (0.66) saucy; urgency=low
+
+  * instead of diversions use override files in /etc/udev/rules.d for all udev
+    rules we disable, this is way easier to maintain
+  * make it non-fatal if no device specific udev rules exist in postinst and
+    we want to copy them
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Sat, 03 Aug 2013 10:51:18 +0200
+
+lxc-android-config (0.65) saucy; urgency=low
+
+  * Adding overrides for alsa-store and alsa-restore
+  * Diverting /lib/udev/rules.d/90-alsa-restore.rules to avoid issues with
+    store / restore logic (as we had with Nexus 7 in the desktop image)
+
+ -- Ricardo Salveti de Araujo <ricardo.salveti@canonical.com>  Fri, 02 Aug 2013 16:05:54 -0300
+
+lxc-android-config (0.64) saucy; urgency=low
+
+  * Replace /usr/lib/lxc-android-config/image-fstab by an equivalent
+    /etc/system-image/writable-paths. That file is parsed by the initrd and
+    then turned into an actual fstab.
+    This centralizes all bind-mount/tmpfs information in a single file,
+    including the flag to migrate the data on first boot.
+
+ -- Stéphane Graber <stgraber@ubuntu.com>  Fri, 02 Aug 2013 18:09:48 +0200
+
+lxc-android-config (0.63) saucy; urgency=low
+
+  * Divert the standard NetworkManager policykit profile and replace it with
+    a more liberal one, until we have lightdm + real sessions in Ubuntu Touch.
+
+ -- Steve Langasek <steve.langasek@ubuntu.com>  Fri, 02 Aug 2013 16:27:36 +0100
+
+lxc-android-config (0.62) saucy; urgency=low
+
+  * Add udev rules file for the Huawei Ascend P1 (u9200)
+
+ -- Jani Monoses <jani.monoses@canonical.com>  Thu, 01 Aug 2013 19:28:56 +0300
+
+lxc-android-config (0.61) saucy; urgency=low
+
+  * update the GT-I9100 udev rules
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Thu, 01 Aug 2013 15:52:25 +0200
+
+lxc-android-config (0.60) saucy; urgency=low
+
+  * add STSYEM and USERDATA to accepted partition labels in update-fstab
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Thu, 01 Aug 2013 15:37:31 +0200
+
+lxc-android-config (0.59) saucy; urgency=low
+
+  * add a pre-start.d dir to container config
+  * move bits like disabling adb or uchroot into pre-start.d snippets so it is
+    easier to en/disable (by just setting/removing the executable bit) or
+    replace/override them
+  * depend on debianutils which ships run-parts
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Thu, 01 Aug 2013 12:45:38 +0200
+
+lxc-android-config (0.58) saucy; urgency=low
+
+  * add a sleep 3 to lxc-android-config upstart job to give the container more
+    time to come up before we emit the android signal
+  * add initial udev rule for Samsung Galaxy S2 (GT-I9100)
+  * add support for samsung partition naming scheme to update-fstab
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Wed, 31 Jul 2013 16:40:00 +0200
+
+lxc-android-config (0.57) saucy; urgency=low
+
+  * do not drop /factory but mount it readonly, this seems to work fine
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Fri, 26 Jul 2013 13:05:03 +0200
+
+lxc-android-config (0.56) saucy; urgency=low
+
+  * back out the mounting of /factory, it causes all sorts of havoc in the
+    container and seemingly also breaks teh starting of apps from the cmdline
+    for whatever reason (LP: #1205285).
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Fri, 26 Jul 2013 12:18:09 +0200
+
+lxc-android-config (0.55) saucy; urgency=low
+
+  * /usr/lib/lxc-android-config/update-fstab ... make sure thw executable bit
+    is set
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Thu, 25 Jul 2013 14:47:15 +0200
+
+lxc-android-config (0.54) saucy; urgency=low
+
+  * Drop system-image/client.ini as the code now knows how to detect the model.
+
+ -- Stéphane Graber <stgraber@ubuntu.com>  Thu, 25 Jul 2013 13:10:59 +0100
+
+lxc-android-config (0.53) saucy; urgency=low
+
+  * add support for /factory mount (in case a matchiong label exists) to the
+    update-fstab script (note this will only work on freshly flashed images)
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Wed, 24 Jul 2013 12:28:30 +0200
+
+lxc-android-config (0.52) saucy; urgency=low
+
+  * Adding workaround to temporarily ignore "RLIMIT_NICE not set" messages
+    from binder, until the proper solution is in place by the security team.
+
+ -- Ricardo Salveti de Araujo <ricardo.salveti@canonical.com>  Thu, 18 Jul 2013 22:33:09 -0300
+
+lxc-android-config (0.51) saucy; urgency=low
+
+  * Update image-fstab:
+    - Change most permanent storage paths to match the target
+    - Add /etc/system-image/client.ini
+
+ -- Stéphane Graber <stgraber@ubuntu.com>  Fri, 12 Jul 2013 15:01:59 -0400
+
+lxc-android-config (0.50) saucy; urgency=low
+
+  * remove powerd.overrid again ... fix is in powerd now
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Fri, 12 Jul 2013 14:20:33 +0200
+
+lxc-android-config (0.49) saucy; urgency=low
+
+  * replace /data by /userdata as the userdata mount point.
+
+ -- Stéphane Graber <stgraber@ubuntu.com>  Thu, 11 Jul 2013 11:44:24 -0400
+
+lxc-android-config (0.48) saucy; urgency=low
+
+  * temporary re-add powerd.override, the new powerd.conf as shipped in the
+    powerd package is missing two env variables
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Thu, 11 Jul 2013 12:58:35 +0200
+
+lxc-android-config (0.47) saucy; urgency=low
+
+  * drop powerd.override
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Wed, 10 Jul 2013 20:15:17 +0200
+
+lxc-android-config (0.46) saucy; urgency=low
+
+  * drop rmnet_usb[0-3] hacks, NM now knows how to ignore these
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Tue, 09 Jul 2013 20:32:03 +0200
+
+lxc-android-config (0.45) saucy; urgency=low
+
+  * Add /var/lib/system-image to image-fstab.
+
+ -- Stéphane Graber <stgraber@ubuntu.com>  Mon, 08 Jul 2013 18:50:40 -0400
+
+lxc-android-config (0.44) saucy; urgency=low
+
+  * Removing etc/rsyslog.d/45-binder.conf, not needed anymore.
+
+ -- Ricardo Salveti de Araujo <ricardo.salveti@canonical.com>  Thu, 04 Jul 2013 04:45:06 -0300
+
+lxc-android-config (0.43) saucy; urgency=low
+
+  * pre-start.sh: disable adbd by forcing an empty usb mode, so it can be
+    triggered manually from the ubuntu side, if needed (e.g. setprop
+    service.adb.tcp.port 5555 to get inside android using adb over tcp).
+
+ -- Ricardo Salveti de Araujo <ricardo.salveti@canonical.com>  Tue, 02 Jul 2013 21:43:52 -0300
+
+lxc-android-config (0.42) saucy; urgency=low
+
+  * do not copy the udev rule on every boot if it is already there (we only
+    want to force copy it on upgrades from postinst which we do anyway already)
+  * make udev wait for lxc-android-boot
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Tue, 02 Jul 2013 16:41:38 +0200
+
+lxc-android-config (0.41) saucy; urgency=low
+
+  * lxc-android-config: Stop using /proc/<pid>/root, instead let LXC deal with
+    /dev/socket and just bind-mount /sys/fs/cgroup/cpu on /dev/cpuctl
+  * lxc pre-start: bind-mount /dev/socket to /socket in the container, then get
+    android init to bind-mount that over /dev/socket at boot time.
+    Update all mount calls to use -n so not to spam /etc/mtab.
+  * ofono: Add a 5s delay after we find the rild socket, reduces the occurence
+    of a boot time race condition.
+
+ -- Stéphane Graber <stgraber@ubuntu.com>  Mon, 01 Jul 2013 14:08:23 -0400
+
+lxc-android-config (0.40) saucy; urgency=low
+
+  * Add support for flipped loop-mounted read-only images. This extends the
+    LXC pre-start script to properly handle a read-only rootfs and to use
+    the partitions from /android in such case.
+    This also disables the fstab generator for read-only images, instead
+    relying on the initrd doing all that setup instead.
+
+ -- Stéphane Graber <stgraber@ubuntu.com>  Fri, 28 Jun 2013 16:45:51 -0400
+
+lxc-android-config (0.39) saucy; urgency=low
+
+  * also add rmnet_usb[0-3] handling to lxc-android-boot firstboot job
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Fri, 28 Jun 2013 21:32:46 +0200
+
+lxc-android-config (0.38) saucy; urgency=low
+
+  * Rename lxc-android-fstab.upstart to lxc-android-boot.upstart
+  * lxc-android-boot.upstart:
+    - Add logic to create the modules dir link (LP: #1194549)
+  * Add description to the upstart jobs
+  * Common indentation in postinst and postrm files
+  * Purge old lxc-android-fstab conf files
+  * Adding missing license text for GPLv3
+
+ -- Ricardo Salveti de Araujo <ricardo.salveti@canonical.com>  Fri, 28 Jun 2013 00:42:12 -0300
+
+lxc-android-config (0.37) saucy; urgency=low
+
+  * Set the apparmor profile to unconfined for the android LXC container.
+    This is required to allow booting the container on devices that have
+    apparmor support enabled in their kernel (until we come up with a proper
+    profile anyway).
+
+ -- Stéphane Graber <stgraber@ubuntu.com>  Thu, 27 Jun 2013 12:33:51 -0400
+
+lxc-android-config (0.36) saucy; urgency=low
+
+  * on mako devices add rmnet_usb[0-3] to /etc/network/interfaces as a
+    temporary workaround for LP: #1193161
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Wed, 26 Jun 2013 20:38:11 +0200
+
+lxc-android-config (0.35) saucy; urgency=low
+
+  * simplify the lxc-android-config upstart job even more
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Mon, 24 Jun 2013 14:01:24 +0200
+
+lxc-android-config (0.34) saucy; urgency=low
+
+  * simplify the lxc-android-config upstart job and use a global var for the
+    list of linkable dirs.
+  * make the ofono upstart job wait for /dev/socket creation
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Mon, 24 Jun 2013 13:39:21 +0200
+
+lxc-android-config (0.33) saucy; urgency=low
+
+  * divert alsar-ucm udev rules, we do not want to apply this on the ubuntu
+    side currenntly.
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Sun, 23 Jun 2013 16:27:20 +0200
+
+lxc-android-config (0.32) saucy; urgency=low
+
+  * also copy device specific rules on upgrades
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Sat, 22 Jun 2013 15:40:47 +0200
+
+lxc-android-config (0.31) saucy; urgency=low
+
+  * drop device specific rules from 65-android.rules, ship 70-maguro.rules,
+    70-grouper.rules, 70-mako.rules and 70-manta.rules, created from their
+    respective ueventd.rc and init.rc files. copy the device matching rules
+    file in place from the lxc-android-fstab upstart job on first boot.
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Sat, 22 Jun 2013 14:36:06 +0200
+
+lxc-android-config (0.30) saucy; urgency=low
+
+  * disable adbd in the container and add a comment what to do to switch adb
+    from host to container on pre-start.sh script
+  * ignore "RLIMIT_NICE not set" messages from binder in syslog to not fill
+    the disk
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Sat, 22 Jun 2013 11:57:31 +0200
+
+lxc-android-config (0.29) saucy; urgency=low
+
+  * make sure we also handle files in subdirs when creating socket and cpuctl
+    links from the container to the hosts /dev
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Sat, 22 Jun 2013 11:42:18 +0200
+
+lxc-android-config (0.28) saucy; urgency=low
+
+  * 65-android.rules:
+    - Fixing file permission for /dev/alog/*
+    - Adding proper links for graphics devices (/dev/graphics)
+  * lxc-android-config.upstart: removing graphics link as that's now covered
+    by udev
+
+ -- Ricardo Salveti de Araujo <ricardo.salveti@canonical.com>  Fri, 21 Jun 2013 19:33:33 -0300
+
+lxc-android-config (0.27) saucy; urgency=low
+
+  * 65-android.rules: changing dsscomp permission to 0666, to avoid permission
+    errors with mir (this needs to be improved with groups once we fix all the
+    groups between android and ubuntu)
+
+ -- Ricardo Salveti de Araujo <ricardo.salveti@canonical.com>  Fri, 21 Jun 2013 13:04:28 -0300
+
+lxc-android-config (0.26) saucy; urgency=low
+
+  * call lxc-stop on shutdown and reboot, that should improve both functions
+    on the mako
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Tue, 18 Jun 2013 23:18:35 +0200
+
+lxc-android-config (0.25) saucy; urgency=low
+
+  * rework the fetsb creation, should fix nexus7 installs
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Tue, 18 Jun 2013 14:44:43 +0200
+
+lxc-android-config (0.24) saucy; urgency=low
+
+  * add proper udev rules for nexus7 (grouper) tablet
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Mon, 17 Jun 2013 23:25:14 +0200
+
+lxc-android-config (0.23) saucy; urgency=low
+
+  * quieten removal of /dev subdirs to not spam the upstart log on each boot
+  * make pre-existing dirs and files under /dev non fatal when creating dirs
+    and links
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Fri, 14 Jun 2013 14:01:42 +0200
+
+lxc-android-config (0.22) saucy; urgency=low
+
+  * make the container upstart job emit "android"
+  * ship an udev.override upstart job that makes udev wait until after the
+    container is up.
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Wed, 12 Jun 2013 13:23:48 +0200
+
+lxc-android-config (0.21) saucy; urgency=low
+
+  * rework ofono upstart job slightly, we don't need to sleep twice
+    and we want to exit after a timeout if there is no rild at all.
+  * rework powerd upstart job slightly to use proper upstart setup.
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Tue, 11 Jun 2013 13:14:14 +0200
+
+lxc-android-config (0.20) saucy; urgency=low
+
+  * hand some vars over to the chroot call in android-chroot
+  * allow commands with fill path in android-chroot
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Sat, 08 Jun 2013 15:52:53 +0200
+
+lxc-android-config (0.19) saucy; urgency=low
+
+  * ship android-chroot tool for conveninent chrooting into the container
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Sat, 08 Jun 2013 15:06:42 +0200
+
+lxc-android-config (0.18) saucy; urgency=low
+
+  * rework upstart job to properly have the exec outside of script stanzas
+  * ship an ofono.override file that makes the daemon wait for the socket
+  * override lxc-net startup, we do not need the lxcbr0 interface
+  * override powerd.conf, we want to respawn and start only after dbus
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Sat, 08 Jun 2013 14:20:59 +0200
+
+lxc-android-config (0.17) saucy; urgency=low
+
+  * make sure "ubuntu_chroot init" never gets started in the container,
+    else we end up with two /sbin/init processes on the host.
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Sat, 08 Jun 2013 11:45:26 +0200
+
+lxc-android-config (0.16) saucy; urgency=low
+
+  * Actually add the postinst/postrm to the package from 0.14...
+
+ -- Steve Langasek <steve.langasek@ubuntu.com>  Fri, 07 Jun 2013 12:13:07 -0700
+
+lxc-android-config (0.15) saucy; urgency=low
+
+  * drop ofono.override again. the upstart-file-bridge did not give us the
+    expected result and ofono will grow support for waiting for the socket in
+    the daemon soon.
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Thu, 06 Jun 2013 20:55:46 +0200
+
+lxc-android-config (0.14) saucy; urgency=low
+
+  * Add diversions for /lib/udev/rules.d/50-firmware.rules and
+    /lib/udev/rules.d/60-persistent-v4l.rules: the first because all of
+    our firmware currently lives where only ueventd sees it (meaning udev
+    will return false-negatives for firmware load requests), the second
+    because even with the firmware loading out of the way, v4l_id probes
+    of video devices are causing kernel panics immediately after boot
+    (on mako) due to udev starting earlier than ueventd.  This works around
+    LP: 1187189.
+
+ -- Steve Langasek <steve.langasek@ubuntu.com>  Thu, 06 Jun 2013 10:39:18 -0700
+
+lxc-android-config (0.13) saucy; urgency=low
+
+  * and indeed use teh right filenames for the upstart override files
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Thu, 06 Jun 2013 13:00:07 +0200
+
+lxc-android-config (0.12) saucy; urgency=low
+
+  * disable tty upstart jobs as well as setvtrgb
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Thu, 06 Jun 2013 12:54:45 +0200
+
+lxc-android-config (0.11) saucy; urgency=low
+
+  * ship an ofono.override file that makes the job wait for /dev/socket/rild
+  * rework linking of the /dev subdirectories from the container to the host
+    system to make ofono work with the rild inside the container
+  * add Recommends: ofono
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Thu, 06 Jun 2013 12:24:10 +0200
+
+lxc-android-config (0.10) saucy; urgency=low
+
+  * rework lxc-android-config upstart job a bit so the linked subdirs in /dev
+    are definitely gone before we start the container
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Wed, 05 Jun 2013 23:40:53 +0200
+
+lxc-android-config (0.9) saucy; urgency=low
+
+  * make sure we mount /system, /data and /vendor after fstab creation, else
+    the user needs to reboot after first boot to get the phone shell
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Wed, 05 Jun 2013 15:52:18 +0200
+
+lxc-android-config (0.8) saucy; urgency=low
+
+  * make sure we remove the links in /dev beforre linking the android
+    container subdirs
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Wed, 05 Jun 2013 15:36:17 +0200
+
+lxc-android-config (0.7) saucy; urgency=low
+
+  * drop hack that removes udev.override, fixed in ubuntu-touch-session
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Wed, 05 Jun 2013 11:32:19 +0200
+
+lxc-android-config (0.6) saucy; urgency=low
+
+  * remove filesystem mounting from upstart job
+  * add linking of required /dev subdirs to upstart job
+  * drop noauto from fstab entries, seems the lxc container gets along with
+    already mounthe filesystems
+  * add a gross hack to remove udev.override until we can properly fix
+    ubuntu-session
+  * ship more udev rules for android devices
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Tue, 04 Jun 2013 12:31:52 +0200
+
+lxc-android-config (0.5) saucy; urgency=low
+
+  * add /dev/kgsl-3d0 to chmodded devices in upstart job (will have to be
+    ported to a udev rule)
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Mon, 03 Jun 2013 21:31:09 +0200
+
+lxc-android-config (0.4) saucy; urgency=low
+
+  * make sure fstab is world readable after adding android entries
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Sun, 02 Jun 2013 15:53:14 +0200
+
+lxc-android-config (0.3) saucy; urgency=low
+
+  * add udev rules for /dev/alog/ device creation
+  * clean up upstart job and drop logging device hacks
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Sat, 01 Jun 2013 16:05:39 +0200
+
+lxc-android-config (0.2) saucy; urgency=low
+
+  * add script and upstart job for fstab entry creation on first boot
+  * bump compat level to 9
+  * enable overrides in /var/lib/lxc/android/overrides
+  * update to new copyright format
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Sat, 01 Jun 2013 14:19:50 +0200
+
+lxc-android-config (0.1) saucy; urgency=low
+
+  * initial Release
+
+ -- Oliver Grawert <ogra@ubuntu.com>  Fri, 31 May 2013 12:16:42 +0200

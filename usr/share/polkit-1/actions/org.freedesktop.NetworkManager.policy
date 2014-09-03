@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE policyconfig PUBLIC
+ "-//freedesktop//DTD PolicyKit Policy Configuration 1.0//EN"
+ "http://www.freedesktop.org/standards/PolicyKit/1.0/policyconfig.dtd">
+<policyconfig>
+
+  <vendor>NetworkManager</vendor>
+  <vendor_url>http://www.gnome.org/projects/NetworkManager</vendor_url>
+  <icon_name>nm-icon</icon_name>
+
+  <action id="org.freedesktop.NetworkManager.enable-disable-network">
+    <defaults>
+      <allow_any>yes</allow_any>
+    </defaults>
+  </action>
+
+  <action id="org.freedesktop.NetworkManager.sleep-wake">
+    <defaults>
+      <allow_any>no</allow_any>
+    </defaults>
+  </action>
+
+  <action id="org.freedesktop.NetworkManager.enable-disable-wifi">
+    <defaults>
+      <allow_any>yes</allow_any>
+    </defaults>
+  </action>
+
+  <action id="org.freedesktop.NetworkManager.enable-disable-wwan">
+    <defaults>
+      <allow_any>yes</allow_any>
+    </defaults>
+  </action>
+
+  <action id="org.freedesktop.NetworkManager.enable-disable-wimax">
+    <defaults>
+      <allow_any>yes</allow_any>
+    </defaults>
+  </action>
+
+  <action id="org.freedesktop.NetworkManager.network-control">
+    <defaults>
+      <allow_any>yes</allow_any>
+    </defaults>
+  </action>
+
+  <action id="org.freedesktop.NetworkManager.wifi.share.protected">
+    <defaults>
+      <allow_any>yes</allow_any>
+    </defaults>
+  </action>
+
+  <action id="org.freedesktop.NetworkManager.wifi.share.open">
+    <defaults>
+      <allow_any>yes</allow_any>
+    </defaults>
+  </action>
+
+  <action id="org.freedesktop.NetworkManager.settings.modify.own">
+    <defaults>
+      <allow_any>yes</allow_any>
+    </defaults>
+  </action>
+
+  <action id="org.freedesktop.NetworkManager.settings.modify.system">
+    <defaults>
+      <allow_any>yes</allow_any>
+    </defaults>
+  </action>
+
+  <action id="org.freedesktop.NetworkManager.settings.modify.hostname">
+    <defaults>
+      <allow_any>yes</allow_any>
+    </defaults>
+  </action>
+
+  <action id="org.freedesktop.NetworkManager.use-user-connections">
+    <defaults>
+      <allow_any>yes</allow_any>
+    </defaults>
+  </action>
+
+</policyconfig>
