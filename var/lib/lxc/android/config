@@ -1,4 +1,4 @@
-lxc.rootfs = /var/lib/lxc/android/rootfs
+lxc.rootfs = /android
 lxc.utsname = armhf
 
 lxc.devttydir = lxc
