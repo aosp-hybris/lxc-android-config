@@ -20,7 +20,7 @@ mkdir -p /dev/socket $LXC_ROOTFS_PATH/dev/socket
 mount -n -o bind,rw /dev/socket $LXC_ROOTFS_PATH/dev/socket
 
 # Make host can run /syste/bin/logcat
-mkdir -p /dev/alog
+mkdir -p /dev/alog $LXC_ROOTFS_PATH/dev/alog
 mount -n -o bind,rw /dev/alog $LXC_ROOTFS_PATH/dev/alog
 
 # run config snippet scripts
